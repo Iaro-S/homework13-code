@@ -9,26 +9,25 @@ public class DailyPlanner {
         this.activities.addAll(activities);
     }
 
-    public List<List<DaySchedule>> addActivity(Days day, String newActivity) {
-        List<List<DaySchedule>> result = new ArrayList<>();
-        for (DaySchedule activity : activities) {
+    public List<DaySchedule> addActivity(Days day, String newActivity) {
+        List<DaySchedule> result = new ArrayList<>();
+        /*for (DaySchedule activity : activities) {
             if (activity.getDay().equals(day) && activity.getActivities() == null) {
-                List<DaySchedule> newList = new ArrayList<>(day,addDailyActivity(newActivity));
-                result.add(newList);
+                result.add(1, addDailyActivity(day, newActivity));
             }
-        }
+        }*/
         return result;
     }
 
-    private List<String> addDailyActivity(String newActivity, DaySchedule activity, Days day) {
-        if (activity.getDay().equals(day)) {
-            List<String> newList = new ArrayList<>(activity.getActivities());
-            System.out.println(newList + " old list");
-            if (activity.getActivities() == null) {
-                newList = new ArrayList<>();
+    private DaySchedule addDailyActivity(Days day, String newActivity) {
+        for (DaySchedule activity : activities) {
+            if (activity.getDay().equals(day)) {
+                List<String> newList = new ArrayList<>(activity.getActivities());
+                if (activity.getActivities() == null) {
+                    newList = new ArrayList<>();
+                }
+                newList.add(newActivity);
             }
-            newList.add(newActivity + " new list");
-            System.out.println(newList);
         }
         return null;
     }

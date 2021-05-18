@@ -9,8 +9,8 @@ public class Main {
                 new DaySchedule(Days.TUESDAY, List.of("activity1")),
                 new DaySchedule(Days.FRIDAY, List.of("activity1", "activity2", "activity3", "activity4"))
         ));
-        //System.out.println(dailyPlanner + "\n");
-        System.out.println(dailyPlanner.addActivity(Days.MONDAY, "activity4"));
+        System.out.println(dailyPlanner + "\n");
+        System.out.println(dailyPlanner.addActivity(Days.SUNDAY, "activity4") + "\n");
         System.out.println(dailyPlanner + "\n");
     }
 }

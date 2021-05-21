@@ -3,48 +3,56 @@ package ro.fasttrackit.homework13;
 import java.util.*;
 
 public class DailyPlanner {
-    private final List<DaySchedule> activities = new ArrayList<>();
+    private final List<DaySchedule> daySchedule = new ArrayList<>();
 
-    public DailyPlanner(Collection<DaySchedule> activities) {
-        this.activities.addAll(activities);
+    public void addActivity(Days day, String activity) {
+        if (activity == null) {
+            throw new NoActivityException("activity is null");
+        }
+        var foundSchedule = getDaySchedule(day);
+        if (foundSchedule == null) {
+            foundSchedule = new DaySchedule(day);
+            daySchedule.add(foundSchedule);
+        }
+        foundSchedule.addActivity(activity);
     }
 
-    public List<DaySchedule> addActivity(Days day, String newActivity) {
-        List<DaySchedule> result = new ArrayList<>();
-        /*for (DaySchedule activity : activities) {
-            if (activity.getDay().equals(day) && activity.getActivities() == null) {
-                result.add(1, addDailyActivity(day, newActivity));
-            }
-        }*/
-        return result;
-    }
-
-    private DaySchedule addDailyActivity(Days day, String newActivity) {
-        for (DaySchedule activity : activities) {
-            if (activity.getDay().equals(day)) {
-                List<String> newList = new ArrayList<>(activity.getActivities());
-                if (activity.getActivities() == null) {
-                    newList = new ArrayList<>();
-                }
-                newList.add(newActivity);
+    public DaySchedule getDaySchedule(Days day) {
+        for (DaySchedule schedule : daySchedule) {
+            if (schedule.getDay() == day) {
+                return schedule;
             }
         }
         return null;
     }
 
     public void removeActivity(Days day, String activity) {
+        DaySchedule daySchedule = getDaySchedule(day);
+        if (daySchedule == null || !daySchedule.containsActivity(activity)) {
+            throw new NoActivityException("Day " + day + " doesn't have activity");
+        } else {
+            daySchedule.removeActivity(activity);
+        }
     }
 
-    public void getActivities(Days day) {
+    public List<String> getActivities(Days day) {
+        DaySchedule schedule = getDaySchedule(day);
+        if (schedule != null) {
+            return schedule.getActivities();
+        } else {
+            return List.of();
+        }
     }
 
-    public void endPlanning(Map<Days, List<String>> activities) {
-    }
-
-    @Override
-    public String toString() {
-        return "DailyPlanner{" +
-                "activities=" + activities +
-                '}';
+    public Map<Days, List<String>> endPlanning() throws NoActivitiesForDayException {
+        Map<Days, List<String>> result = new HashMap<>();
+        for (Days day : Days.values()) {
+            DaySchedule schedule = getDaySchedule(day);
+            if (schedule == null || schedule.getActivities().isEmpty()) {
+                throw new NoActivitiesForDayException("no activities for " + day);
+            }
+            result.put(schedule.getDay(), schedule.getActivities());
+        }
+        return result;
     }
 }

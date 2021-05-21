@@ -7,23 +7,23 @@ public class Main {
         DaySchedule mySchedule = new DaySchedule(Days.MONDAY);
         List<String> act = mySchedule.getActivities();
         System.out.println();
-        act.add("Hackermann");
+        act.add("hackerman");
         System.out.println(mySchedule.getActivities());
-        mySchedule.addActivity("activity1");
+        System.out.println(act);
+        mySchedule.addActivity("running");
         System.out.println(mySchedule.getActivities());
         DailyPlanner planer = new DailyPlanner();
-        planer.addActivity(Days.THURSDAY, "Activity2");
+        planer.addActivity(Days.THURSDAY, "inot");
+        planer.addActivity(Days.THURSDAY, "chitara");
         System.out.println(planer.getDaySchedule(Days.THURSDAY));
-        planer.addActivity(Days.SUNDAY, "Activity3");
-        System.out.println(planer.getDaySchedule(Days.FRIDAY));
-        planer.removeActivity(Days.THURSDAY, "Activity2");
+        planer.removeActivity(Days.THURSDAY, "inot");
         System.out.println(planer.getDaySchedule(Days.THURSDAY));
-        planer.removeActivity(Days.MONDAY, "test");
-        System.out.println(planer.getActivities(Days.MONDAY));
+//		planer.removeActivity(Day.THURSDAY, "crosetat");
+        System.out.println(planer.getDaySchedule(Days.THURSDAY));
         try {
             System.out.println(planer.endPlanning());
-        } catch (NoActivitiesForDayException ex) {
-            System.out.println(ex.getMessage());
+        } catch (NoActivitiesForDayException er) {
+            System.err.println(er.getMessage());
         }
     }
 }

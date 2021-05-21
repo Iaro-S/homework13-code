@@ -6,11 +6,11 @@ import java.util.Objects;
 
 public class DaySchedule {
     private final Days day;
-    List<String> activities;
+    private final List<String> activities;
 
     public DaySchedule(Days day) {
         this.day = day;
-        this.activities = new ArrayList<>(activities);
+        this.activities = new ArrayList<>();
     }
 
     public Days getDay() {
@@ -18,19 +18,24 @@ public class DaySchedule {
     }
 
     public List<String> getActivities() {
-        return activities;
+        return new ArrayList<>(activities);
     }
 
     public void addActivity(String activity) {
         activities.add(activity);
     }
 
-    public void removeActivity(String activity) {
-        activities.remove(activity);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DaySchedule that = (DaySchedule) o;
+        return day == that.day && Objects.equals(activities, that.activities);
     }
 
-    public boolean containsActivity(String activity) {
-        return activities.contains(activity);
+    @Override
+    public int hashCode() {
+        return Objects.hash(day, activities);
     }
 
     @Override
@@ -41,16 +46,11 @@ public class DaySchedule {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof DaySchedule)) return false;
-        DaySchedule that = (DaySchedule) o;
-        return getDay() == that.getDay() && Objects.equals(getActivities(), that.getActivities());
+    public void removeActivity(String activity) {
+        activities.remove(activity);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDay(), getActivities());
+    public boolean containsActivity(String activity) {
+        return activities.contains(activity);
     }
 }
